@@ -51,5 +51,26 @@ GROUP BY stanza_id;
 
 -------------JOIN----------
 
+Nona query:
+
+SELECT name, lastname AS cognome,date_of_birth AS data_di_nascita, prenotazione_id AS prenotazione
+FROM ospiti
+INNER JOIN prenotazioni_has_ospiti ON prenotazioni_has_ospiti.ospite_id = ospiti.id
+INNER JOIN prenotazioni ON prenotazioni.id = prenotazioni_has_ospiti.prenotazione_id;
+
+Decima query:
+
+SELECT SUM (price) AS somma_prezzi_totali
+FROM pagamenti
+JOIN prenotazioni ON prenotazioni.id = pagamenti.prenotazione_id
+JOIN stanze ON stanze.id = prenotazioni.stanza_id
+WHERE stanze.floor = 1; 
+
+undicesima query:
+
+
+
+
+
 
 
