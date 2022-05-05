@@ -68,6 +68,12 @@ WHERE stanze.floor = 1;
 
 undicesima query:
 
+SELECT stanze.id, room_number AS Numero_stanza
+FROM stanze
+LEFT JOIN prenotazioni
+ON stanze.id = prenotazioni.stanza_id
+WHERE prenotazioni.id IS NULL;
+
 
 
 
