@@ -36,3 +36,20 @@ SELECT SUM(beds) AS Posti_letto_totali
 FROM stanze
 
 -------------GROUP BY---------
+
+Settima query:
+
+SELECT SUM(price) AS Somma_prezzi
+FROM pagamenti
+GROUP BY status ;
+
+Ottava query:
+
+SELECT COUNT (stanza_id) AS Numero_volte_stanza_prenotata
+FROM prenotazioni
+GROUP BY stanza_id;
+
+-------------JOIN----------
+
+
+
