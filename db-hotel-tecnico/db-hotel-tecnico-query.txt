@@ -1,0 +1,38 @@
+------------SELECT---------
+
+Prima query:
+
+SELECT *
+FROM ospiti
+WHERE document_type = 'CI';
+
+Seconda query:
+
+SELECT *
+FROM ospiti
+WHERE date_of_birth > 1988-01-01;
+
+Terza query:
+
+SELECT *
+FROM ospiti
+WHERE name LIKE 'D%';
+
+Quarta query:
+
+SELECT SUM(price) AS somma_pagamenti
+FROM pagamenti
+WHERE status = 'accepted';
+
+Quinta query:
+
+SELECT MAX(price) AS prezzo_massimo
+FROM pagamenti
+WHERE status = 'accepted';
+
+Sesta query:
+
+SELECT SUM(beds) AS Posti_letto_totali
+FROM stanze
+
+-------------GROUP BY---------
