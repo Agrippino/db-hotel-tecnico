@@ -1,0 +1,88 @@
+
+------STANZE ESISTENTI----
+
+CREATE TABLE [dbo].[Stanze_esistenti]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [numero_camera] TINYINT NOT NULL, 
+    [numero_piano] TINYINT NOT NULL, 
+    [numero_di_letti] TINYINT NOT NULL
+)
+
+------PRENOTAZIONE HOTEL----
+
+CREATE TABLE [dbo].[Prenotazione_hotel]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [giorni_prenotati] DATETIME NOT NULL, 
+    [costo_totale] DECIMAL(6, 2) NOT NULL, 
+    [numero_camere_prenotate] TINYINT NOT NULL, 
+    
+)
+
+------OSPITI----
+
+CREATE TABLE [dbo].[Ospiti]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Prenotazione_hotel_id] INT NOT NULL, 
+    [Nome ] VARCHAR(100) NOT NULL, 
+    [Cognome] VARCHAR(100) NOT NULL, 
+    [Data_nascita_ospite] DATETIME NOT NULL, 
+    [Numero_cellulare] CHAR(14) NOT NULL, 
+    [Tipo_documeto] VARCHAR(50) NOT NULL, 
+    [Numero_documento] VARCHAR(20) NOT NULL, 
+    CONSTRAINT [FK_Ospiti_Prenotazione_hotel] FOREIGN KEY ([Prenotazione_hotel_id]) REFERENCES [Prenotazione_hotel]([id]), 
+)
+
+------CONFIGURAZIONE PRENOTAZIONI----
+
+CREATE TABLE [dbo].[Configurazione_prenotazioni]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Prenotazione_hotel_id] INT NOT NULL, 
+    [Letto_singolo] TINYINT NOT NULL, 
+    [Letto_matrimoniale] TINYINT NOT NULL, 
+    [Letto_matrimoniale_con_letto_singolo] TINYINT NOT NULL, 
+    [Titolo_configurazione] VARCHAR(100) NOT NULL, 
+    [Descrizione_configurazione] TEXT NULL, 
+    CONSTRAINT [FK_Configurazione_prenotazioni_Prenotazione_hotel] FOREIGN KEY ([Prenotazione_hotel_id]) REFERENCES [Prenotazione_hotel]([id])
+)
+
+------PAGAMENTO ----
+
+CREATE TABLE [dbo].[Pagamento]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Prenotazione_hotel_id] INT NOT NULL, 
+    [Metodo_pagamento] DECIMAL(6, 2) NOT NULL, 
+    [Status] VARCHAR(50) NOT NULL, 
+    [Pagamento_accepted] DECIMAL(6, 2) NOT NULL, 
+    [Pagamento_pending] DECIMAL(6, 2) NOT NULL, 
+    [Pagamento_rejected] DECIMAL(6, 2) NOT NULL, 
+    CONSTRAINT [FK_Pagamento_Prenotazione_hotel] FOREIGN KEY ([Prenotazione_hotel_id]) REFERENCES [Prenotazione_hotel]([id]), 
+ )
+
+------STANZE PRENOTATE----
+
+CREATE TABLE [dbo].[Stanze_prenotate]
+(
+    CONSTRAINT [FK_Stanze_prenotate_Stanze_esistenti] FOREIGN KEY ([Stanze_esistenti_id]) REFERENCES [Stanze_esistenti]([id]), 
+    [Stanze_esistenti_id] INT NOT NULL, 
+    [Prenotazioni_hotel_id] INT NOT NULL, 
+    CONSTRAINT [FK_Stanze_prenotate_Prenotazioni_hotel] FOREIGN KEY ([Prenotazioni_hotel_id]) REFERENCES [Prenotazioni_hotel]([id])
+)
+
+------INDENTIFICAZIONE PRENOTAZIONE----
+
+CREATE TABLE [dbo].[Identificazione_prenotazione]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [Ospiti_id] INT NOT NULL, 
+    [Prenotazione_hotel_id] INT NOT NULL, 
+    CONSTRAINT [FK_Identificazione_prenotazione_Ospiti] FOREIGN KEY ([Ospiti_id]) REFERENCES [Ospiti]([id]), 
+    CONSTRAINT [FK_Identificazione_prenotazione_Prenotazione_hotel] FOREIGN KEY ([Prenotazione_hotel_id]) REFERENCES [Prenotazione_hotel]([id]),
+)
+
+
+
